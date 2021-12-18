@@ -10,32 +10,45 @@ class App extends Component {
        bio: "passionné par l'informatique",
        imgSrc:'http://placeimg.com/640/360/any',
        profession: "Developpeur web",
-       shows: false
+       shows: false,
+       timer: null,
+       date: new Date()
+
     
       }
    
     this.showPerson = this.showPerson.bind(this);
-    this.affichage = this.affichage.bind(this);
-    this.masqPerson = this.masqPerson.bind(this);
+   
+    this.showTimer = this.showTimer.bind(this);
   
     }
   
    componentDidMount(){
+
+    this.timer = window.setInterval(
+      () => this.showTimer(),
+      1000
+    );
    
-    
-    let timer = window.setInterval(() => {
-      
-   },100);
+   
+   console.log(this.timer);
+   console.log(this.showTimer())
+     
+
   }
 
       
 
-      masqPerson(){
-        alert("Erreur")
+     showTimer(){
+          this.setState({
+            date: new Date()
+          });
+          return this.state.date;
       }
 
       showPerson(){
         
+
         this.setState({
           shows: true,
         })
@@ -46,17 +59,22 @@ class App extends Component {
  
   render(){
     return (
-      this.state.shows ? this.masqPerson(): 
-        <>
-          <div>
-            <h2>Votre nom {this.state.fullname} </h2>
-            <h2>Votre bio{ this.state.bio}</h2>
-            <h2><img src={this.state.imgSrc}/> </h2>
-            <h2>Votre profession {this.state.profession} </h2> 
-            <button onChange={this.showPerson}>click me</button>
-            <h2>interval: {this.timer}</h2>
+      <div>
+        
+
+     { this.state.shows ? 
+            <div>
+              <h2>Votre nom {this.state.fullname} </h2>
+              <h2>Votre bio{ this.state.bio}</h2>
+              <h2><img src={this.state.imgSrc}/> </h2>
+              <h2>Votre profession {this.state.profession} </h2>
+              <h2>time: {this.timer}  </h2> 
             </div> 
-      </>
+      : <button onClick={this.showPerson}>click me</button>
+       }
+       
+      </div> 
+
     );
   }
 }
